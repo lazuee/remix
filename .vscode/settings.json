@@ -1,0 +1,61 @@
+{
+  "explorer.sortOrder": "type",
+  // "explorer.excludeGitIgnore": true,
+
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+
+  "css.validate": false,
+  "scss.validate": false,
+  "less.validate": false,
+  "scss.lint.unknownAtRules": "ignore",
+  "css.lint.unknownAtRules": "ignore",
+
+  "files.eol": "\n",
+  "files.autoGuessEncoding": true,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  "files.autoSave": "onFocusChange",
+
+  "editor.quickSuggestions": { "strings": true },
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": false,
+  "editor.formatOnSaveMode": "modificationsIfAvailable",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.ts": "explicit",
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never",
+    "source.sortImports": "never"
+  },
+
+  "eslint.enable": true,
+  "eslint.useFlatConfig": true,
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "eslint.options": {
+    "overrideConfigFile": "./eslint.config.js"
+  },
+
+  "prettier.enable": true,
+  "prettier.requireConfig": true,
+  "prettier.withNodeModules": true,
+  "prettier.prettierPath": "./node_modules/prettier",
+  "prettier.configPath": "./prettier.config.js",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  "stylelint.enable": true,
+  "stylelint.configFile": "./stylelint.config.js",
+  "stylelint.packageManager": "pnpm",
+  "stylelint.validate": ["css", "scss"],
+
+  "tailwindCSS.includeLanguages": {
+    "typescript": "javascript",
+    "typescriptreact": "javascript"
+  },
+  "tailwindCSS.experimental.classRegex": [["(?:cn)\\(([^\\);]*)[\\);]", "[`'\"]([^'\"`,;]*)[`'\"]"]],
+  "[scss][css][tailwindcss]": {
+    "editor.defaultFormatter": "stylelint.vscode-stylelint",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.stylelint": "always"
+    }
+  }
+}

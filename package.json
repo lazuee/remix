@@ -1,0 +1,89 @@
+{
+  "name": "website",
+  "type": "module",
+  "private": true,
+  "sideEffects": false,
+  "packageManager": "pnpm@9.10.0",
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "build": "cross-env NODE_ENV=production remix vite:build",
+    "build:analyze": "cross-env NODE_ENV=production remix vite:build --mode analyze",
+    "dev": "cross-env NODE_ENV=development remix vite:dev",
+    "start": "cross-env NODE_ENV=production node ./build/server/serve.mjs",
+    "format": "pnpm run format:prettier && npm run format:stylelint",
+    "format:prettier": "prettier --check --write --ignore-unknown --ignore-path .gitignore --log-level silent \"./**/*.{[jt]s?(x),m[jt]s,json,md}\"",
+    "format:stylelint": "stylelint --fix --ignore-path .gitignore --quiet \"./**/*.{css,scss}\""
+  },
+  "dependencies": {
+    "@fontsource/jetbrains-mono": "5.1.0",
+    "@fontsource/pretendard": "5.1.0",
+    "@hono/node-server": "1.13.1",
+    "@remix-run/node": "2.12.1",
+    "@remix-run/react": "2.12.1",
+    "@vercel/analytics": "1.3.1",
+    "@vercel/speed-insights": "1.0.12",
+    "dotenv": "16.4.5",
+    "dotenv-expand": "11.0.6",
+    "hono": "4.6.3",
+    "is-ip": "5.0.1",
+    "isbot": "5.1.17",
+    "react": "19.0.0-rc-dfd30974ab-20240613",
+    "react-dom": "19.0.0-rc-dfd30974ab-20240613",
+    "remix-themes": "1.5.1",
+    "remix-utils": "7.7.0"
+  },
+  "devDependencies": {
+    "@eslint/compat": "1.2.0",
+    "@eslint/js": "9.11.1",
+    "@ianvs/prettier-plugin-sort-imports": "4.3.1",
+    "@remix-run/dev": "2.12.1",
+    "@resolid/remix-plugins": "2.2.1",
+    "@types/eslint__js": "8.42.3",
+    "@types/node": "22.7.4",
+    "@types/react": "npm:types-react@19.0.0-alpha.3",
+    "@types/react-dom": "npm:types-react-dom@19.0.0-alpha.3",
+    "autoprefixer": "10.4.20",
+    "browserslist-to-esbuild": "2.1.1",
+    "clsx": "2.1.1",
+    "cross-env": "7.0.3",
+    "eslint": "9.11.1",
+    "eslint-plugin-unused-imports": "4.1.4",
+    "postcss": "8.4.47",
+    "postcss-import": "16.1.0",
+    "postcss-import-ext-glob": "2.1.1",
+    "postcss-load-config": "6.0.1",
+    "prettier": "3.3.3",
+    "prettier-plugin-css-order": "2.1.2",
+    "prettier-plugin-jsdoc": "1.3.0",
+    "prettier-plugin-tailwindcss": "0.6.8",
+    "sass": "1.79.4",
+    "stylelint": "16.9.0",
+    "stylelint-config-clean-order": "6.1.0",
+    "stylelint-config-standard-scss": "13.1.0",
+    "stylelint-config-tailwindcss": "0.0.7",
+    "stylelint-prettier": "5.0.2",
+    "stylelint-scss": "6.7.0",
+    "tailwind-merge": "2.5.3",
+    "tailwind-scrollbar-utilities": "0.2.0",
+    "tailwindcss": "3.4.13",
+    "terser": "5.34.1",
+    "typescript": "5.6.2",
+    "typescript-eslint": "8.8.0",
+    "vite": "5.4.8",
+    "vite-tsconfig-paths": "5.0.1"
+  },
+  "pnpm": {
+    "overrides": {
+      "@types/react": "$@types/react",
+      "@types/react-dom": "$@types/react-dom",
+      "react": "$react",
+      "react-dom": "$react-dom"
+    }
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "browserslist": [
+    "defaults and > 0.3%"
+  ]
+}

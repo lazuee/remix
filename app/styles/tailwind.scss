@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  @apply h-full bg-zinc-50 font-sans text-black antialiased dark:bg-zinc-900 dark:text-zinc-100;
+}

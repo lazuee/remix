@@ -1,0 +1,32 @@
+{
+  "include": ["**/*.ts", "**/*.tsx", "**/*.d.ts", "**/.server/**/*.ts", "**/.server/**/*.tsx", "**/.client/**/*.ts", "**/.client/**/*.tsx"],
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "incremental": true,
+    "skipLibCheck": true,
+    "target": "ES2022",
+    "verbatimModuleSyntax": true,
+    "allowJs": true,
+    "checkJs": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noFallthroughCasesInSwitch": true,
+    "allowImportingTsExtensions": true,
+
+    "moduleResolution": "Bundler",
+    "module": "ESNext",
+    "noEmit": true,
+    "isolatedModules": true,
+
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+
+    "paths": {
+      "~/*": ["./app/*"]
+    }
+  }
+}
