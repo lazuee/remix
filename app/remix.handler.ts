@@ -1,3 +1,6 @@
+import { btoa } from "node:buffer";
+import { getRandomValues } from "node:crypto";
+
 import { createRequestHandler } from "@remix-run/node";
 import { getClientIPAddress } from "remix-utils/get-client-ip-address";
 
@@ -15,7 +18,7 @@ declare module "@remix-run/node" {
 }
 
 export default function remixHandler(build: ServerBuild, c: Context<{ Bindings: HttpBindings }>) {
-  const nonce = `nonce-${Math.random().toString(36).slice(2)}`;
+  const nonce = btoa(String.fromCharCode(...getRandomValues(new Uint8Array(32))));
   c.res.headers.set("Content-Security-Policy", getContentSecurityPolicy(nonce));
 
   const requestHandler = createRequestHandler(build, "production");
