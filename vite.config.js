@@ -23,6 +23,26 @@ export default defineConfig(() => {
   const port = parseInt(env?.PORT || "3000");
 
   return {
+    plugins: [
+      remix({
+        future: {
+          v3_fetcherPersist: true,
+          v3_relativeSplatPath: true,
+          v3_throwAbortReason: true,
+          unstable_optimizeDeps: true,
+        },
+        serverModuleFormat: "esm",
+        ignoredRouteFiles: ["**/*"],
+        routes: async () => {
+          return await remixFlexRoutes({
+            ignoredRouteFiles: ["**/.*", "**/__*/*", "**/__*.*"],
+          });
+        },
+        presets: [nodeHonoPreset()],
+        ...(env.VERCEL_ENV && { presets: [vercelServerlessPreset({ regions: "hnd1" })] }),
+      }),
+      tsconfigPaths(),
+    ],
     server: {
       port,
       open: false,
@@ -67,27 +87,5 @@ export default defineConfig(() => {
         toplevel: true,
       },
     },
-    plugins: [
-      remix({
-        future: {
-          v3_fetcherPersist: true,
-          v3_relativeSplatPath: true,
-          v3_throwAbortReason: true,
-          unstable_lazyRouteDiscovery: true,
-          unstable_optimizeDeps: true,
-          unstable_singleFetch: true,
-        },
-        serverModuleFormat: "esm",
-        ignoredRouteFiles: ["**/*"],
-        routes: async () => {
-          return await remixFlexRoutes({
-            ignoredRouteFiles: ["**/.*", "**/__*/*", "**/__*.*"],
-          });
-        },
-        presets: [nodeHonoPreset()],
-        ...(env.VERCEL_ENV && { presets: [vercelServerlessPreset({ regions: "hnd1" })] }),
-      }),
-      tsconfigPaths(),
-    ].filter(Boolean),
   };
 });

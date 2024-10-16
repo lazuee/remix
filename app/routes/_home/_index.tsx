@@ -54,7 +54,11 @@ export default function Index() {
             ))}
           </ul>
           <p className={`mt-2 rounded-md text-xs text-zinc-600 dark:text-zinc-500`}>
-            Hosted on {data?.env.IS_VERCEL ? "Vercel" : data?.env.IS_GITPOD ? "Gitpod" : "Localhost"}
+            Hosted on{" "}
+            {(data?.env.IS_VERCEL && "Vercel") ||
+              (data?.env.IS_GITPOD_WORKSPACE && "Gitpod Workspace") ||
+              (data?.env.IS_GITHUB_CODESPACE && "Github Codespace") ||
+              "Localhost"}
           </p>
         </nav>
       </div>

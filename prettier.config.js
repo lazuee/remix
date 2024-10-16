@@ -17,7 +17,7 @@ function defineConfig(config) {
 
 const dirNames = ["routes", "components", "lib", "styles"];
 
-export const config = defineConfig({
+export default defineConfig({
   plugins: ["@ianvs/prettier-plugin-sort-imports", "prettier-plugin-jsdoc", "prettier-plugin-css-order", "prettier-plugin-tailwindcss"],
   importOrder: [
     "",
@@ -50,7 +50,7 @@ export const config = defineConfig({
     "^[.]",
   ],
   importOrderParserPlugins: ["typescript", "jsx", "importAttributes", "decorators"],
-  importOrderTypeScriptVersion: packageJson.devDependencies.typescript,
+  importOrderTypeScriptVersion: packageJson.devDependencies.typescript.replace(/[^0-9.]+/, ""),
   jsdocCommentLineStrategy: "singleLine",
   tsdoc: true,
   cssDeclarationSorterOrder: "smacss",
@@ -89,5 +89,3 @@ export const config = defineConfig({
   printWidth: 160,
   endOfLine: "lf",
 });
-
-export default config;

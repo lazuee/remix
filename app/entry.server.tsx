@@ -7,24 +7,26 @@ import { RemixServer } from "@remix-run/react";
 import { cors } from "remix-utils/cors";
 
 import type { HandleDocumentRequestFunction } from "@remix-run/node";
+import type { RenderToPipeableStreamOptions } from "react-dom/server";
 import { isbot } from "isbot";
 
-export const streamTimeout = 5_000;
 const ABORT_DELAY = 5_000;
-
 const handleDocumentRequest: HandleDocumentRequestFunction = (request, responseStatusCode, responseHeaders, remixContext, { nonce, env }) => {
   return new Promise((resolve, reject) => {
     let shellRendered = false;
-    const renderKey = isbot(responseHeaders.get("user-agent")) ? "onAllReady" : "onShellReady";
-    const stream = renderToPipeableStream(<RemixServer context={remixContext} url={request.url} abortDelay={ABORT_DELAY} nonce={nonce} />, {
+    const userAgent = responseHeaders.get("user-agent");
+    const readyOption: keyof RenderToPipeableStreamOptions = (userAgent && isbot(userAgent)) || remixContext.isSpaMode ? "onAllReady" : "onShellReady";
+
+    // Ensure requests from bots and SPA Mode renders wait for all content to load before responding
+    // https://react.dev/reference/react-dom/server/renderToPipeableStream#waiting-for-all-content-to-load-for-crawlers-and-static-generation
+    const { pipe, abort } = renderToPipeableStream(<RemixServer context={remixContext} url={request.url} abortDelay={ABORT_DELAY} nonce={nonce} />, {
       nonce,
-      [renderKey]: () => {
+      [readyOption]: () => {
         const body = new PassThrough();
-        stream.pipe(body);
         shellRendered = true;
 
         readableStreamToString(createReadableStreamFromReadable(body)).then((html) => {
-          responseHeaders.set("Content-Type", "text/html");
+          responseHeaders.set("Content-Type", "text/html; charset=utf-8");
 
           if (env?.IS_PRODUCTION_BUILD) {
             html = applyPreloadScripts(html);
@@ -41,6 +43,8 @@ const handleDocumentRequest: HandleDocumentRequestFunction = (request, responseS
             ),
           );
         });
+
+        pipe(body);
       },
       onShellError(error: unknown) {
         reject(error);
@@ -54,7 +58,7 @@ const handleDocumentRequest: HandleDocumentRequestFunction = (request, responseS
       },
     });
 
-    setTimeout(() => stream.abort(), ABORT_DELAY);
+    setTimeout(() => abort(), ABORT_DELAY);
   });
 };
 
